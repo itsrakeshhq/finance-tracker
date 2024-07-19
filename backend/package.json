@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "type": "module",
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "packageManager": "yarn@4.2.2",
+  "dependencies": {
+    "@trpc/server": "^10.45.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "superjson": "^2.2.1",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.10",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.1.4"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production tsc",
+    "dev": "cross-env NODE_ENV=development nodemon --watch '**/*.ts' --exec node --import tsx/esm src/index.ts",
+    "start": "node --import tsx/esm src/index.ts"
+  }
+}
