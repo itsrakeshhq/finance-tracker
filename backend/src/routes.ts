@@ -1,9 +1,8 @@
-import { publicProcedure, router } from "./trpc";
+import transactionRouter from "./modules/transaction/transaction.routes";
+import { router } from "./trpc";
 
 const appRouter = router({
-  test: publicProcedure.query(() => {
-    return "Hello, world!";
-  }),
+  transaction: transactionRouter,
 });
 
 export default appRouter;
