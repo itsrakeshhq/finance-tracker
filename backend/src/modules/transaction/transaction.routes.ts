@@ -1,16 +1,16 @@
-import { publicProcedure, router } from "../../trpc";
+import { protectedProcedure, router } from "../../trpc";
 import TransactionController from "./transaction.controller";
-import { insertUserSchema } from "./transaction.schema";
+import { insertTransactionSchema } from "./transaction.schema";
 
 const transactionRouter = router({
-  create: publicProcedure
-    .input(insertUserSchema)
-    .mutation(({ input }) =>
-      new TransactionController().createTransactionHandler(input)
+  create: protectedProcedure
+    .input(insertTransactionSchema)
+    .mutation(({ input, ctx }) =>
+      new TransactionController().createTransactionHandler(input, ctx)
     ),
 
-  getAll: publicProcedure.query(() =>
-    new TransactionController().getTransactionsHandler()
+  getAll: protectedProcedure.query(({ ctx }) =>
+    new TransactionController().getTransactionsHandler(ctx)
   ),
 });
 
