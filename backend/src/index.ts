@@ -8,7 +8,12 @@ import { createContext } from "./trpc";
 
 const app: Application = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 app.use("/health", (_, res) => {
   return res.send("OK");

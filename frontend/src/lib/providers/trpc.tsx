@@ -29,6 +29,12 @@ const trpcClient = trpc.createClient({
     }),
     httpBatchLink({
       url: process.env.NEXT_PUBLIC_TRPC_API_URL,
+      fetch: (url, options) => {
+        return fetch(url, {
+          ...options,
+          credentials: "include",
+        });
+      },
     }),
   ],
 });
@@ -40,7 +46,7 @@ export function TRPCProvider({
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         {children}
-        {/* <ReactQueryDevtools position="bottom-left" /> */}
+        <ReactQueryDevtools position="bottom-left" />
       </QueryClientProvider>
     </trpc.Provider>
   );

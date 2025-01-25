@@ -42,7 +42,7 @@ export default class AuthController extends AuthService {
     return await super.register(data);
   }
 
-  async refreshAccessTokenHandler(ctx: AuthenticatedContext) {
+  async refreshAccessTokenHandler(ctx: Context) {
     const cookies = new Cookies(ctx.req, ctx.res, {
       secure: process.env.NODE_ENV === "production",
     });
@@ -57,10 +57,7 @@ export default class AuthController extends AuthService {
 
     const accessToken = await super.refreshAccessToken(refreshToken);
 
-    cookies.set("accessToken", accessToken, { ...accessTokenCookieOptions });
-    cookies.set("logged_in", "true", { ...accessTokenCookieOptions });
-
-    return { success: true };
+    return { success: true, accessToken };
   }
 
   async logoutHandler(ctx: AuthenticatedContext) {

@@ -13,7 +13,7 @@ const authRouter = router({
     .input(insertUserSchema)
     .mutation(({ input }) => new AuthController().registerHandler(input)),
 
-  refreshAccessToken: protectedProcedure.mutation(({ ctx }) =>
+  refreshAccessToken: publicProcedure.mutation(({ ctx }) =>
     new AuthController().refreshAccessTokenHandler(ctx)
   ),
 
