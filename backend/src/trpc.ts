@@ -2,11 +2,11 @@ import { initTRPC, TRPCError, type inferAsyncReturnType } from "@trpc/server";
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import Cookies from "cookies";
 import { eq } from "drizzle-orm";
+import SuperJSON from "superjson";
 import AuthService from "./modules/auth/auth.service";
 import { users } from "./modules/user/user.schema";
 import { db } from "./utils/db";
 import { redis } from "./utils/redis";
-import SuperJSON from "superjson";
 
 /**
  * Creates the context for tRPC by extracting the request and response objects from the Express context options.
@@ -22,7 +22,7 @@ export const createContext = async ({
       return { req, res };
     }
 
-    const userId = await new AuthService().verifyAccessToken(accessToken);
+    const userId = new AuthService().verifyAccessToken(accessToken);
     if (!userId) {
       return { req, res };
     }

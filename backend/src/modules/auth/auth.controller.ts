@@ -122,4 +122,25 @@ export default class AuthController extends AuthService {
       });
     }
   }
+
+  async verifyOtpHandler(data: { email: string; otp: string }, ctx: Context) {
+    const { email, otp } = data;
+
+    const { accessToken, refreshToken } = await super.verifyOtp(email, otp);
+
+    const cookies = new Cookies(ctx.req, ctx.res, {
+      secure: process.env.NODE_ENV === "production",
+    });
+    cookies.set("accessToken", accessToken, { ...accessTokenCookieOptions });
+    cookies.set("refreshToken", refreshToken, {
+      ...refreshTokenCookieOptions,
+    });
+    cookies.set("logged_in", "true", { ...accessTokenCookieOptions });
+
+    return { success: true };
+  }
+
+  async resendOtpHandler(email: string) {
+    return await super.sendOtpEmail(email);
+  }
 }

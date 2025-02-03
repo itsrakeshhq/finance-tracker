@@ -46,7 +46,7 @@ export function TRPCProvider({
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         {children}
-        <ReactQueryDevtools position="bottom-left" />
+        {/* <ReactQueryDevtools position="bottom-left" /> */}
       </QueryClientProvider>
     </trpc.Provider>
   );
